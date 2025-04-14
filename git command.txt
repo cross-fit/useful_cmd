@@ -1,0 +1,37 @@
+//http || https
+git config --global http.proxy 127.0.0.1:7890
+git config --global https.proxy 127.0.0.1:7890
+
+//sock5代理
+git config --global http.proxy socks5 127.0.0.1:7891
+git config --global https.proxy socks5 127.0.0.1:7891
+
+//查看代理
+git config --global --get http.proxy
+git config --global --get https.proxy
+
+//取消代理
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+
+//链接本地与远程分支
+git push --set-upstream origin/remote-dev
+
+//强制覆盖本地分支到远程分支
+git push origin 分支名 --force
+
+git remote set-head origin -a ：将 origin/HEAD 指向远程仓库的默认分支
+
+git remote set-head origin dev ：将 origin/HEAD 指向指定的远程分支
+
+在当前分支输入该命令，就会将当前所在本地分支关联远程dev分支
+git branch -u origin/远程分支
+ 
+写两个分支名的话远程分支写前面，本地分支写后面
+git branch -u origin/远程分支 本地分支
+
+查看本地分支与远程分支的映射关系
+git branch -vv
+
+撤销commit （--hard工作区同时撤销代码）
+git reset --soft HEAD^
