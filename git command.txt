@@ -1,3 +1,6 @@
+//查看git全局配置
+git config --global --list
+
 //http || https
 git config --global http.proxy 127.0.0.1:7890
 git config --global https.proxy 127.0.0.1:7890
