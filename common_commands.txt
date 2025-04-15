@@ -1,0 +1,77 @@
+#列出系统python可用软连接
+sudo update-alternatives --list python
+
+#设置系统python软连接
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
+
+#配置系统python软连接
+sudo update-alternatives --config python
+
+#删除系统python软连接
+sudo update-alternatives --remove python3 /usr/local/bin/python3.8
+
+#换源
+sudo gedit /etc/apt/sources.list
+
+#查看Eigen3版本
+gedit /usr/include/eigen3/Eigen/src/Core/util/Macros.h
+
+#查看ceres版本
+gedit /usr/local/include/ceres/version.h
+
+sudo gedit ~/.bashrc
+
+#配置gazebo用户环境 （要全路径！！！！不要~）
+source /home/wts/catkin_ws/devel/setup.bash
+source /home/wts/PX4_Firmware/Tools/setup_gazebo.bash /home/wts/PX4_Firmware/ /home/wts/PX4_Firmware/build/px4_sitl_default
+export ROS_PACKAGE_PATH=ROS_PACKAGE_PATH:~/PX4_Firmware
+export ROS_PACKAGE_PATH=ROS_PACKAGE_PATH:~/PX4_Firmware/Tools/sitl_gazebo
+
+#编译orb-slam2
+cd ~/catkin_ws/src/ORB_SLAM2
+chmod +x build.sh
+./build.sh
+export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/catkin_ws/src/ORB_SLAM2/Examples/ROS 
+chmod +x build_ros.sh
+./build_ros.sh
+
+#运行orb-slam2 px4 gazebo仿真，角速度控制
+roslaunch px4 indoor2.launch
+sh xtdrone_run_stereo.sh
+python attitude_contorl_demo.py iris angular_speed
+
+//数据处理，地面真值
+// 记录topic为bag文件
+rosbag record -O groundtruth.bag /gazebo/model_states
+
+//查看bag文件信息
+rosbag info groundtruth.bag
+
+//输出bag文件的数据到指定csv文件
+rostopic echo -b groundtruth.bag -p /gazebo/model_states > groundtruth.csv
+
+//查看topic发布频率
+rosrun rqt_topic rqt_topic
+/gazebo/model_states hz=250 T=0.004
+
+//python脚本取出csv文件里timestamp,tx,ty,tz,qx,qy,qz,qw到groundtruth.tum
+python3 groundtruthprocess.py 
+(时间切换为秒制单位
+YZ坐标轴反向)
+
+#运行ros节点执行ctrl+c后进程会转而执行rosspin()后面的程序，但是如果在一定时间内程序没有执行完毕，进程会强制退出，并抛出”escalating to SIGTERM“错误，更改最大运行时间
+sudo gedit /opt/ros/melodic/lib/python2.7/dist-packages/roslaunch/nodeprocess.py
+
+gnome-system-monitor //查看资源管理
+
+nvidia-smi  //静态查看GPU使用情况
+
+watch -n 1 nvidia-smi  //动态查看GPU使用情况
+
+git clone --branch <version number> <repository_url> --depth 1 //克隆制定版本代码
+
+pkg-config --modversion opencv
+
+[url "https://gitclone.com/github.com/"]
+	insteadOf = https://github.com/
+
