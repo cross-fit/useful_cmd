@@ -1,5 +1,17 @@
+//配置本地信息
+git config --global user.name "Your Name"
+git config --global user.email "email@example.com"
+
 //查看git全局配置
 git config --global --list
+
+//配置SSH
+ssh-keygen -t rsa -C “email@example.com”
+
+cd ~/.ssh
+cat id_rsa.pub
+
+ssh -T git@github.com
 
 //http || https
 git config --global http.proxy 127.0.0.1:7890
