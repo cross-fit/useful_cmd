@@ -1,0 +1,18 @@
+#列出系统python可用软连接
+sudo update-alternatives --list python
+
+#设置系统python软连接
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
+
+#配置系统python软连接
+sudo update-alternatives --config python
+
+#删除系统python软连接
+sudo update-alternatives --remove python3 /usr/local/bin/python3.8
+
+#conda 初始化相关
+export PATH=$PATH:/home/try/miniconda3/bin
+source ~/.bashrc
+conda init
+重启终端
+conda activate env_name

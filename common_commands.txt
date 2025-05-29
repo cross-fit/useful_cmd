@@ -1,15 +1,3 @@
-#列出系统python可用软连接
-sudo update-alternatives --list python
-
-#设置系统python软连接
-sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
-
-#配置系统python软连接
-sudo update-alternatives --config python
-
-#删除系统python软连接
-sudo update-alternatives --remove python3 /usr/local/bin/python3.8
-
 #换源
 sudo gedit /etc/apt/sources.list
 
@@ -74,4 +62,3 @@ pkg-config --modversion opencv
 
 [url "https://gitclone.com/github.com/"]
 	insteadOf = https://github.com/
-
